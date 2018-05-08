@@ -9,14 +9,19 @@ namespace StockTracking.Models
         public virtual DbSet<Estimate> Estimate { get; set; }
         public virtual DbSet<InvesmentCompany> InvesmentCompany { get; set; }
         public virtual DbSet<Stock> Stock { get; set; }
+        public virtual DbSet<Period> Period { get; set; }
 
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        public InvesmentContext(DbContextOptions<InvesmentContext> options) : base(options)
         {
-            if (!optionsBuilder.IsConfigured)
-            {
-                optionsBuilder.UseSqlServer(@"Server=PC670\SQLEXPRESS;Database=Invesment;Trusted_Connection=True;");
-            }
         }
+
+        //protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        //{
+        //    if (!optionsBuilder.IsConfigured)
+        //    {
+        //        optionsBuilder.UseSqlServer(@"Server=PC670\SQLEXPRESS;Database=Invesment;Trusted_Connection=True;");
+        //    }
+        //}
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -27,10 +32,6 @@ namespace StockTracking.Models
                 entity.Property(e => e.EndDate).HasColumnType("date");
 
                 entity.Property(e => e.OpeningPrice).HasColumnType("decimal(18, 6)");
-
-                entity.Property(e => e.Period)
-                    .IsRequired()
-                    .HasMaxLength(50);
 
                 entity.Property(e => e.StartDate).HasColumnType("date");
 
@@ -47,6 +48,21 @@ namespace StockTracking.Models
                     .HasForeignKey(d => d.StockId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_Estimate_Stock");
+
+                entity.HasOne(d => d.Period)
+                    .WithMany(p => p.Estimate)
+                    .HasForeignKey(d => d.PeriodId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_Estimate_Period");
+            });
+
+            modelBuilder.Entity<Period>(entity =>
+            {
+                entity.Property(e => e.IsActive).HasDefaultValueSql("((1))");
+
+                entity.Property(e => e.Name)
+                    .IsRequired()
+                    .HasMaxLength(50);
             });
 
             modelBuilder.Entity<InvesmentCompany>(entity =>

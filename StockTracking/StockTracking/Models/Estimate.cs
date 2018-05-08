@@ -8,7 +8,7 @@ namespace StockTracking.Models
         public int Id { get; set; }
         public byte InvesmentCompanyId { get; set; }
         public short StockId { get; set; }
-        public string Period { get; set; }
+        public byte PeriodId { get; set; }
         public DateTime StartDate { get; set; }
         public DateTime EndDate { get; set; }
         public decimal OpeningPrice { get; set; }
@@ -17,5 +17,6 @@ namespace StockTracking.Models
 
         public InvesmentCompany InvesmentCompany { get; set; }
         public Stock Stock { get; set; }
+        public Period Period { get; set; }
     }
 }
