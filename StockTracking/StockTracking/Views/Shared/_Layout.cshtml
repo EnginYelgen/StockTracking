@@ -26,14 +26,17 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a asp-area="" asp-controller="Home" asp-action="Index" class="navbar-brand">StockTracking</a>
+                <a asp-area="" asp-controller="Estimates" asp-action="Index" class="navbar-brand">StockTracking</a>
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
-                    <li><a asp-area="" asp-controller="Home" asp-action="Index">Home</a></li>
-                    <li><a asp-area="" asp-controller="Home" asp-action="About">About</a></li>
-                    <li><a asp-area="" asp-controller="Home" asp-action="Contact">Contact</a></li>
+                    @*<li><a asp-area="" asp-controller="Home" asp-action="Index">Home</a></li>*@
+                    @*<li><a asp-area="" asp-controller="Home" asp-action="About">About</a></li>*@
+                    @*<li><a asp-area="" asp-controller="Home" asp-action="Contact">Contact</a></li>*@
                     <li><a asp-area="" asp-controller="Estimates" asp-action="Index">Estimates</a></li>
+                    <li><a asp-area="" asp-controller="Estimates" asp-action="Advices">Advices</a></li>
+                    <li><a asp-area="" asp-controller="Estimates" asp-action="Reports">Reports</a></li>
+                    <li><a asp-area="" asp-controller="Estimates" asp-action="History">History of Estimates</a></li>
                 </ul>
             </div>
         </div>

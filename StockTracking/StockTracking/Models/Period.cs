@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace StockTracking.Models
 {
@@ -11,8 +12,9 @@ namespace StockTracking.Models
         }
 
         public byte Id { get; set; }
+        [Display(Name = "Periyot")]
         public string Name { get; set; }
-        public bool? IsActive { get; set; }
+        public bool IsActive { get; set; }
 
         public ICollection<Estimate> Estimate { get; set; }
     }

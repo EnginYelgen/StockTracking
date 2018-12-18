@@ -1,0 +1,96 @@
+﻿@model IEnumerable<StockTracking.Models.Estimate>
+
+@{
+    ViewData["Title"] = "History";
+}
+
+<style type="text/css">
+    tr:hover {
+        background-color: whitesmoke;
+    }
+</style>
+
+<h2>History</h2>
+
+<div class="row">
+    <form asp-action="History" method="get">
+        <input name="isFilter" type="hidden" value="true" />
+        <input name="startdate" type="date" placeholder="Baş. Tarihi" value="@ViewBag.StartDate" />
+        <input name="enddate" type="date" placeholder="Bitiş Tarihi" value="@ViewBag.EndDate" />
+        <input type="submit" value="Search" />
+    </form>
+</div>
+<div class="row">
+    <p>
+        @if (!ViewData.ModelState.IsValid && ViewData.ModelState["Error"] != null && ViewData.ModelState["Error"].Errors.Count > 0)
+        {
+            <div class="alert alert-danger">
+                <strong>Error!</strong> @ViewData.ModelState["Error"].Errors.First().ErrorMessage
+            </div>
+        }
+    </p>
+</div>
+<div class="row">
+    <table class="table">
+        <thead>
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.Period.Name)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.StartDate)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.EndDate)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.InvesmentCompany.Name)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Stock.Code)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.OpeningPrice)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.TargetPrice)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.ClosingPrice)
+                </th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Period.Name)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.StartDate)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.EndDate)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.InvesmentCompany.Name)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Stock.Code)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.OpeningPrice)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.TargetPrice)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.ClosingPrice)
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

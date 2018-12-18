@@ -1,0 +1,191 @@
+﻿@model StockTracking.ViewModels.CreateBulkyModel
+
+@{
+    ViewData["Title"] = "Create Bulky";
+}
+
+<style type="text/css">
+    tr:hover {
+        background-color: whitesmoke;
+    }
+</style>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+
+        $("#btnCreateBulky").on("click", function () {
+
+            $.ajax({
+                type: 'POST',
+                url: 'CreateEstimates',
+                dataType: 'json',
+                success: function (data) {
+                    console.log('Success: ');
+                    console.log(data);
+
+                    //alert(data.msgCode + "\n" + data.msgDetail);
+                    alert(data.msgDetail);
+                },
+                error: function (data) {
+                    console.log('Error: ');
+                    console.log(data);
+                }
+            });
+        });
+    });
+</script>
+
+@*<head>
+        <script type="text/javascript">
+            @if (!ViewData.ModelState.IsValid && ViewData.ModelState["Error"] != null && ViewData.ModelState["Error"].Errors.Count > 0)
+            {
+                <text>
+                $(document).ready(function() {
+                    alert('@ViewData.ModelState["Error"].Errors.First().ErrorMessage');
+                });
+                </text>
+            }
+        </script>
+    </head>*@
+
+<h2>Create Bulky</h2>
+
+<h4>Estimate</h4>
+<hr />
+<div class="row">
+    @if (!ViewData.ModelState.IsValid && ViewData.ModelState["Error"] != null && ViewData.ModelState["Error"].Errors.Count > 0)
+    {
+        <div class="alert alert-danger">
+            <strong>Error!</strong> @ViewData.ModelState["Error"].Errors.First().ErrorMessage
+        </div>
+    }
+</div>
+<div class="row">
+    <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
+        <form asp-action="CreateBulky">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="InvesmentCompanyId" class="control-label"></label>
+                <select asp-for="InvesmentCompanyId" class="form-control" asp-items="ViewBag.InvesmentCompanyId"></select>
+            </div>
+            <div class="form-group">
+                <label asp-for="StockId" class="control-label"></label>
+                <select asp-for="StockId" class="form-control" asp-items="ViewBag.StockId"></select>
+            </div>
+            <div class="form-group">
+                <label asp-for="PeriodId" class="control-label"></label>
+                <select asp-for="PeriodId" class="form-control" asp-items="ViewBag.PeriodId"></select>
+            </div>
+            <div class="form-group">
+                <label asp-for="StartDate" class="control-label"></label>
+                <input asp-for="StartDate" class="form-control" type="date" />
+                <span asp-validation-for="StartDate" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="EndDate" class="control-label"></label>
+                <input asp-for="EndDate" class="form-control" type="date" />
+                <span asp-validation-for="EndDate" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="OpeningPrice" class="control-label"></label>
+                <input asp-for="OpeningPrice" class="form-control" type="number" />
+                <span asp-validation-for="OpeningPrice" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="TargetPrice" class="control-label"></label>
+                <input asp-for="TargetPrice" class="form-control" type="number" />
+                <span asp-validation-for="TargetPrice" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ClosingPrice" class="control-label"></label>
+                <input asp-for="ClosingPrice" class="form-control" type="number" />
+                <span asp-validation-for="ClosingPrice" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Add" class="btn btn-default" />
+            </div>
+        </form>
+    </div>
+    <div class="col-lg-9 col-md-9 col-sm-12 col-xs-12">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>
+                        @Html.DisplayNameFor(model => model.StartDate)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.EndDate)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.InvesmentCompanyName)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.PeriodName)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.StockCode)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.OpeningPrice)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.TargetPrice)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.ClosingPrice)
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model.Estimates)
+                {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.StartDate)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.EndDate)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.InvesmentCompanyName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.PeriodName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.StockCode)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.OpeningPrice)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.TargetPrice)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.ClosingPrice)
+                    </td>
+                    <td>
+                        <a asp-action="DeleteItem" asp-route-id="@item.Key">Delete</a>
+                    </td>
+                </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<div class="row text-right">
+    @*<input id="btnCreateBulky" value="Bitir" class="btn btn-default" />*@
+    <form asp-action="CreateEstimates">
+        <input type="submit" value="Bitir" class="btn btn-default" />
+    </form>
+    @*<a asp-action="CreateEstimates" class="btn btn-default">Bitir</a>*@
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
